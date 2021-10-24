@@ -55,8 +55,29 @@ public class GraphHelper {
 		return sb.toString();		
 	}
 	
+	public static void createAdjacencyMatrixFile(Graph graph, String path) {
+		File file = new File(path);
+		try {
+			FileWriter output = new FileWriter(file);
+			output.write(adjacencyMatrixToString(graph));
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
 	
-	public static void createBFSTableFile(String path, BFSTable table) {
+	public static void createAdjacencyListFile(Graph graph, String path) {
+		File file = new File(path);
+		try {
+			FileWriter output = new FileWriter(file);
+			output.write(adjacencyListToString(graph));
+			output.close();
+		} catch (IOException e) {
+			e.printStackTrace();
+		}
+	}
+	
+	public static void createBFSTableFile(BFSTable table, String path) {
 		File file = new File(path);
 		try {
 			FileWriter output = new FileWriter(file);

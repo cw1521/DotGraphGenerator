@@ -1,0 +1,4 @@
+ ,A,B,C,D,E,F,G,H,I,J,K,L,M,N,O,P,Q,R,S,T,U,V,W,X,Y
+Color,Black,Black,Black,Black,Black,Black,Grey,White,Black,Black,Black,Black,White,Grey,Black,White,Grey,Black,Black,Grey,White,White,Grey,Black,White
+Distance,0,1,1,2,3,4,5,inf,1,3,2,1,inf,5,3,inf,4,3,4,5,inf,inf,5,4,inf
+Predecessor,null,A,A,B,D,E,F,null,A,D,I,A,null,F,D,null,R,K,J,S,null,null,X,E,null

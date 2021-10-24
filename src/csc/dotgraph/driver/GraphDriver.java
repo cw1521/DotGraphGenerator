@@ -6,6 +6,8 @@ import java.util.HashMap;
 import java.util.LinkedList;
 import java.util.Map;
 
+import csc.dotgraph.BFSTable.BFSTable;
+import csc.dotgraph.BFSTable.BFSTableEntry;
 import csc.dotgraph.graph.Graph;
 import csc.dotgraph.graph.Node;
 import csc.dotgraph.graph.UndirectedGraph;
@@ -16,10 +18,14 @@ public class GraphDriver {
 	private static String currentDirectory = System.getProperty("user.dir");
 	private static final String FILESEP = System.getProperty("file.separator");
 	private static String outputDirectory = currentDirectory + FILESEP + "output" + FILESEP;
-
+	private static String csvOutputDirectory = currentDirectory + FILESEP + "output" + FILESEP + "csv" + FILESEP;
+	
+	
 	public static void main(String[] args) {
 		
-		String oFilePath = outputDirectory + "graph1.dot";
+		String graphFilePath = outputDirectory + "graph1.dot";
+		String adjMatrixFilePath = outputDirectory + "adjMatrix.txt";
+		String adjListFilePath = outputDirectory + "adjList.txt";
 		
 		Node a = new Node("A", "A", "circle");
 		Node b = new Node("B", "B", "circle");
@@ -105,12 +111,18 @@ public class GraphDriver {
 		
 		
 		
-		printAdjacencyList(graph1);
-		printAdjacencyMatrix(graph1);
+//		printAdjacencyList(graph1);
+//		printAdjacencyMatrix(graph1);
+		
+		GraphHelper.createAdjacencyListFile(graph1, adjListFilePath);
+		GraphHelper.createAdjacencyMatrixFile(graph1, adjMatrixFilePath);
+		breadthFirstSearch(graph1, "A");
 		
 		
 //		GraphHelper.createGVFromGraph(graph1, oFilePath);
 	}
+	
+	
 	
 	private static void printAdjacencyList(Graph graph) {
 		System.out.println("Adjacency List");
@@ -123,9 +135,48 @@ public class GraphDriver {
 	}
 	
 	private static void breadthFirstSearch(Graph graph, String start) {
-		LinkedList<String> queue = new LinkedList<String>();
+		LinkedList<BFSTableEntry> queue = new LinkedList<BFSTableEntry>();
 		HashMap<String, ArrayList<String>> adjacencyList = graph.getAdjacencyList();
 		ArrayList<String> verticesList = graph.getVerticesList();
+		BFSTable bfsTable = new BFSTable();
+		int fileNumber = 0;
+		
+		for (String vertex : verticesList) {
+			BFSTableEntry tableEntry = new BFSTableEntry(vertex);
+			bfsTable.getTable().put(vertex, tableEntry);
+		}
+		
+		GraphHelper.createBFSTableFile(bfsTable, csvOutputDirectory+"table"+Integer.toString(++fileNumber)+".csv");
+		
+		BFSTableEntry startEntry = bfsTable.getTable().get(start);
+		startEntry.setColor("Grey");
+		startEntry.setDistance(0);
+		startEntry.setPredecessor(null);
+		
+		queue.add(startEntry);
+		
+		GraphHelper.createBFSTableFile(bfsTable, csvOutputDirectory+"table"+Integer.toString(++fileNumber)+".csv");
+		
+		while (!queue.isEmpty()) {
+			BFSTableEntry currentEntry = queue.remove();
+			for (String vertex : adjacencyList.get(currentEntry.getName())) {
+				BFSTableEntry adjNodeEntry = bfsTable.getTable().get(vertex);
+				if (adjNodeEntry.getColor().equals("White")) {
+					adjNodeEntry.setColor("Grey");
+					adjNodeEntry.setDistance(currentEntry.getDistance()+1);
+					adjNodeEntry.setPredecessor(currentEntry.getName());
+					queue.add(adjNodeEntry);
+				}
+//				GraphHelper.createBFSTableFile(bfsTable, csvOutputDirectory+"table"+Integer.toString(++fileNumber)+".csv");
+				
+			}
+			currentEntry.setColor("Black");
+			GraphHelper.createBFSTableFile(bfsTable, csvOutputDirectory+"table"+Integer.toString(++fileNumber)+".csv");
+			
+		}
+		GraphHelper.createBFSTableFile(bfsTable, csvOutputDirectory+"table"+Integer.toString(++fileNumber)+".csv");
+		
+		
 	}
 
 }

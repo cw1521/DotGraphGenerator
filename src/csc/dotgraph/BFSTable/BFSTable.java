@@ -39,7 +39,8 @@ public class BFSTable {
 		}
 		sb.append("\nDistance");
 		for (String key : keys) {
-			sb.append(","+Integer.toString(f_table.get(key).getDistance()));
+			if (f_table.get(key).getDistance() == -1) sb.append(",inf");
+			else sb.append(","+Integer.toString(f_table.get(key).getDistance()));
 		}
 		sb.append("\nPredecessor");
 		for (String key : keys) {
