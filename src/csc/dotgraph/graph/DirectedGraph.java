@@ -2,6 +2,7 @@ package csc.dotgraph.graph;
 
 import java.util.ArrayList;
 import java.util.HashMap;
+import java.util.Map;
 import java.util.Set;
 
 public class DirectedGraph extends Graph {
@@ -51,5 +52,44 @@ public class DirectedGraph extends Graph {
 		strBuilder.append("\n}\n");
 		return strBuilder.toString();
 	}
+
+	@Override
+	public HashMap<String, ArrayList<String>> getAdjacencyList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected HashMap<String, ArrayList<String>> createAdjacencyList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public int[][] getAjacencyMatrix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected int[][] createAdjacencyMatrix() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	protected ArrayList<String> createVerticesList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	@Override
+	public ArrayList<String> getVerticesList() {
+		// TODO Auto-generated method stub
+		return null;
+	}
+
+	
+
 
 }
